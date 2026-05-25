@@ -1,7 +1,22 @@
 repeat task.wait() until game:IsLoaded()
 
+local Players = game:GetService("Players")
 local StarterGui = game:GetService("StarterGui")
 
+local LocalPlayer = Players.LocalPlayer
+
+-- Remove old GUIs
+pcall(function()
+    if LocalPlayer.PlayerGui:FindFirstChild("Hazeyware") then
+        LocalPlayer.PlayerGui.Hazeyware:Destroy()
+    end
+
+    if game.CoreGui:FindFirstChild("Hazeyware") then
+        game.CoreGui.Hazeyware:Destroy()
+    end
+end)
+
+-- Loading notification
 pcall(function()
     StarterGui:SetCore("SendNotification", {
         Title = "HAZEYWARE",
@@ -10,26 +25,14 @@ pcall(function()
     })
 end)
 
--- Remove old Hazeyware GUI if it exists
-pcall(function()
-    local pg = game.Players.LocalPlayer:FindFirstChild("PlayerGui")
-
-    if pg and pg:FindFirstChild("Hazeyware") then
-        pg.Hazeyware:Destroy()
-    end
-
-    if game.CoreGui:FindFirstChild("Hazeyware") then
-        game.CoreGui.Hazeyware:Destroy()
-    end
-end)
-
--- Load skinchanger
+-- Load script
 local SCRIPT_URL = "https://pastebin.com/raw/4rVNKnw0"
 
 pcall(function()
     loadstring(game:HttpGet(SCRIPT_URL))()
 end)
 
+-- Success notification
 task.wait(1)
 
 pcall(function()
